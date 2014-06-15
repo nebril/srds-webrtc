@@ -11,11 +11,16 @@ io.on('connection', function(socket){
 		console.log("got peerId");
 
 		user.id = id;
+		if(users.length === 0) {
+			user.index = 0;
+		}else {
+			user.index = users[users.length - 1].index + 1;
+		}
 		users.push(user);
 
 		console.log("users:", users);
 
-		socket.emit('index', users.indexOf(user));
+		socket.emit('index', user.index);
 
 		io.emit('userList', users);
 	});
