@@ -14,10 +14,7 @@ angular.module('webrtcApp')
 
   	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   	function renderLocal() {
-		console.log('trying to render local');
 		navigator.getUserMedia({audio: true, video: true}, function(stream){
-			console.log ('getting user media');
-
 			var videoElement = document.getElementById('localVideo');
 	        videoElement.src = URL.createObjectURL(stream);
 	        videoElement.play();
@@ -30,11 +27,10 @@ angular.module('webrtcApp')
 
 
 	function init() {
-		var peer = new Peer({key:'er5sknch9r418aor', debug: 3});
+		var peer = new Peer({key:'er5sknch9r418aor'});
 	    var socket = io('http://178.216.200.175:80');
 
 	    socket.on('index', function(index){
-	    	console.log('got index', index);
 	    	$scope.myIndex = index;
 	    });
 
@@ -53,6 +49,21 @@ angular.module('webrtcApp')
 	    		}
 	    	});
 
+	    	$scope.connections.forEach(function(presentUser, index) {
+	    		var incoming = false;
+
+	    		users.forEach(function(incomingUser, i){
+	    			if(presentUser.id === incomingUser.id) {
+	    				incoming = true;
+	    			}
+	    		});
+
+	    		if(!incoming && index >= 0){
+	    			$scope.connections = $scope.connections.slice(0, index).concat($scope.connections.slice(index + 1));
+	    		}
+	    	});
+
+
 	    	$scope.$apply();
 	    });
 
@@ -61,7 +72,6 @@ angular.module('webrtcApp')
 	    });
 
 	    peer.on('call', function(call){
-	    	console.log("got call");
 	    	call.answer(window.localStream);
 	    	renderRemote(call);
 	    });
@@ -73,12 +83,8 @@ angular.module('webrtcApp')
 	    $scope.$on('ngRepeatFinished', callNewer);
 
 		function callNewer(){
-			console.log('calling');
 		    $scope.connections.forEach(function(conn){
-		    	console.log("connection", conn);
-		    	console.log(window.localStream);
 		    	if(!conn.connected && conn.index > $scope.myIndex && typeof(window.localStream) !== 'undefined'){
-		    		console.log("calling with", window.localStream);
 		    		renderRemote(peer.call(conn.id, window.localStream));
 		    		conn.connected = true;
 		    	}
@@ -86,7 +92,6 @@ angular.module('webrtcApp')
 		}
 
 		function renderRemote(call) {
-			console.log("call", call);
 			call.on('stream', function(stream){
 				var videoElement = document.getElementById('video-'+call.peer);
 		        videoElement.src = URL.createObjectURL(stream);
