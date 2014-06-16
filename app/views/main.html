@@ -1,10 +1,8 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
+<div class="videos">
+  <div class="col-md-4 vidwrap thumbnail"><video width="320" height="240" id="localVideo"></video></div>
 
-  <div><span>you</span><video id="localVideo"></video></div>
-
-  <div ng-repeat="connection in connections" on-finish-render>
-    <span>{{ connection.id }}</span><video id="video-{{ connection.id }}" autoplay=""></video>
+  <div class="col-md-4 vidwrap thumbnail" ng-repeat="connection in connections" on-finish-render>
+    <video width="320" height="240" id="video-{{ connection.id }}" autoplay=""></video>
   </div>
 </div>
 

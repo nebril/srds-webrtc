@@ -68,10 +68,17 @@ body {
   }
 }
 
+.vidwrap {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0px; 
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 1200px;
   }
 
   /* Remove the padding we set earlier */
@@ -80,6 +87,7 @@ body {
   .footer {
     padding-left: 0;
     padding-right: 0;
+    clear:both;
   }
   /* Space out the masthead */
   .header {
@@ -90,3 +98,4 @@ body {
     border-bottom: 0;
   }
 }
+
