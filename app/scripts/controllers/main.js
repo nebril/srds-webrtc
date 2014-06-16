@@ -31,7 +31,7 @@ angular.module('webrtcApp')
 
 	function init() {
 		var peer = new Peer({key:'er5sknch9r418aor', debug: 3});
-	    var socket = io('http://192.168.1.100:3000');
+	    var socket = io('http://178.216.200.175:80');
 
 	    socket.on('index', function(index){
 	    	console.log('got index', index);
