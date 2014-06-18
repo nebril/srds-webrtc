@@ -1,5 +1,12 @@
-var app = require('http').createServer();
-var io = require('socket.io')(app);
+var path = require('path');
+
+var connect = require('connect');
+
+var app = connect().use(connect.static(path.join(__dirname, '..', 'dist')));
+
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
 
 var users = [];
 
@@ -34,4 +41,4 @@ io.on('connection', function(socket){
 	});
 });
 
-app.listen(80);
+server.listen(80);

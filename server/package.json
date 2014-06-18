@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "dependencies": {
+    "connect": "^2.19.6",
     "http": "0.0.0",
+    "path": "^0.4.9",
     "socket.io": "^1.0.4"
   }
 }
